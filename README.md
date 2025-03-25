@@ -1,62 +1,60 @@
-# ATM--console-based
-# ATM Operations - Console-Based Python Project
+# Console-Based ATM Operations
 
 # Dictionary to store user details
 users = {
-    "1234": {"pin": "0000", "balance": 5000, "transactions": []},
-    "5678": {"pin": "1111", "balance": 3000, "transactions": []}
+    "1234": {"pin": "0000", "balance": 5000, "transactions": []}
 }
 
-def deposit(account_number, amount):
-    users[account_number]["balance"] += amount
-    users[account_number]["transactions"].append(f"Deposited: {amount}")
-    print(f"Amount {amount} deposited successfully. New balance: {users[account_number]['balance']}")
+def deposit(account, amount):
+    users[account]["balance"] += amount
+    users[account]["transactions"].append(f"Deposited: ${amount}")
+    print(f"${amount} deposited successfully! New Balance: ${users[account]['balance']}")
 
-def withdraw(account_number, amount):
-    if users[account_number]["balance"] >= amount:
-        users[account_number]["balance"] -= amount
-        users[account_number]["transactions"].append(f"Withdrawn: {amount}")
-        print(f"Amount {amount} withdrawn successfully. Remaining balance: {users[account_number]['balance']}")
+def withdraw(account, amount):
+    if users[account]["balance"] >= amount:
+        users[account]["balance"] -= amount
+        users[account]["transactions"].append(f"Withdrawn: ${amount}")
+        print(f"${amount} withdrawn successfully! New Balance: ${users[account]['balance']}")
     else:
-        print("Insufficient balance.")
+        print("Insufficient balance!")
 
-def generate_pin(account_number, new_pin):
-    users[account_number]["pin"] = new_pin
-    print("PIN updated successfully.")
+def generate_pin(account, new_pin):
+    users[account]["pin"] = new_pin
+    print("PIN changed successfully!")
 
-def mini_statement(account_number):
-    print("Last Transactions:")
-    for transaction in users[account_number]["transactions"][-5:]:
+def mini_statement(account):
+    print("\nMini Statement:")
+    for transaction in users[account]["transactions"][-5:]:  # Last 5 transactions
         print(transaction)
+    print(f"Current Balance: ${users[account]['balance']}")
 
-def atm_operations():
-    account_number = input("Enter Account Number: ")
-    if account_number in users:
-        pin = input("Enter PIN: ")
-        if pin == users[account_number]["pin"]:
-            while True:
-                print("\n1. Deposit\n2. Withdraw\n3. Generate PIN\n4. Mini Statement\n5. Exit")
-                choice = input("Choose an option: ")
-                if choice == "1":
-                    amount = int(input("Enter amount to deposit: "))
-                    deposit(account_number, amount)
-                elif choice == "2":
-                    amount = int(input("Enter amount to withdraw: "))
-                    withdraw(account_number, amount)
-                elif choice == "3":
-                    new_pin = input("Enter new PIN: ")
-                    generate_pin(account_number, new_pin)
-                elif choice == "4":
-                    mini_statement(account_number)
-                elif choice == "5":
-                    print("Thank you for using ATM services.")
-                    break
-                else:
-                    print("Invalid choice. Try again.")
-        else:
-            print("Incorrect PIN.")
+def main():
+    account = "1234"  # Example account number
+    pin = input("Enter your PIN: ")
+    
+    if pin == users[account]["pin"]:
+        while True:
+            print("\n1. Deposit\n2. Withdraw\n3. Generate PIN\n4. Mini Statement\n5. Exit")
+            choice = input("Select an option: ")
+            
+            if choice == "1":
+                amount = int(input("Enter amount to deposit: "))
+                deposit(account, amount)
+            elif choice == "2":
+                amount = int(input("Enter amount to withdraw: "))
+                withdraw(account, amount)
+            elif choice == "3":
+                new_pin = input("Enter new PIN: ")
+                generate_pin(account, new_pin)
+            elif choice == "4":
+                mini_statement(account)
+            elif choice == "5":
+                print("Thank you for using the ATM!")
+                break
+            else:
+                print("Invalid option, please try again.")
     else:
-        print("Account not found.")
+        print("Invalid PIN!")
 
-# Run ATM operations
-atm_operations()
+if __name__ == "__main__":
+    main()
