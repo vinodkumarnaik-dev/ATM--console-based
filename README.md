@@ -1,60 +1,48 @@
-# Console-Based ATM Operations
+# ATM Operations - Console Based Application
 
-# Dictionary to store user details
-users = {
-    "1234": {"pin": "0000", "balance": 5000, "transactions": []}
-}
+## Overview
+This is a simple console-based ATM operations application implemented using only control and conditional statements along with the dictionary data type to store user details. The project supports essential ATM functions, including deposit, withdrawal, PIN generation, and mini statement retrieval.
 
-def deposit(account, amount):
-    users[account]["balance"] += amount
-    users[account]["transactions"].append(f"Deposited: ${amount}")
-    print(f"${amount} deposited successfully! New Balance: ${users[account]['balance']}")
+## Features
+- **Deposit Money**: Allows users to deposit money into their account.
+- **Withdraw Money**: Enables users to withdraw money if sufficient balance is available.
+- **PIN Generation**: Users can generate or change their ATM PIN securely.
+- **Mini Statement**: Displays the last few transactions made by the user.
+- **Console-Based Interface**: Simple text-based interface for easy interaction.
 
-def withdraw(account, amount):
-    if users[account]["balance"] >= amount:
-        users[account]["balance"] -= amount
-        users[account]["transactions"].append(f"Withdrawn: ${amount}")
-        print(f"${amount} withdrawn successfully! New Balance: ${users[account]['balance']}")
-    else:
-        print("Insufficient balance!")
+## Technologies Used
+- Python (without external libraries, using only built-in control structures and dictionaries)
 
-def generate_pin(account, new_pin):
-    users[account]["pin"] = new_pin
-    print("PIN changed successfully!")
+## How to Run
+1. Clone the repository:
+   ```sh
+   git clone <repository_url>
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd <project_folder>
+   ```
+3. Run the script:
+   ```sh
+   python atm.py
+   ```
+4. Follow the on-screen instructions to perform ATM operations.
 
-def mini_statement(account):
-    print("\nMini Statement:")
-    for transaction in users[account]["transactions"][-5:]:  # Last 5 transactions
-        print(transaction)
-    print(f"Current Balance: ${users[account]['balance']}")
+## Project Structure
+```
+├── atm.py               # Main script with ATM operations
+├── README.md            # Project documentation
+└── transactions.json    # (If applicable) Stores user transaction data
+```
 
-def main():
-    account = "1234"  # Example account number
-    pin = input("Enter your PIN: ")
-    
-    if pin == users[account]["pin"]:
-        while True:
-            print("\n1. Deposit\n2. Withdraw\n3. Generate PIN\n4. Mini Statement\n5. Exit")
-            choice = input("Select an option: ")
-            
-            if choice == "1":
-                amount = int(input("Enter amount to deposit: "))
-                deposit(account, amount)
-            elif choice == "2":
-                amount = int(input("Enter amount to withdraw: "))
-                withdraw(account, amount)
-            elif choice == "3":
-                new_pin = input("Enter new PIN: ")
-                generate_pin(account, new_pin)
-            elif choice == "4":
-                mini_statement(account)
-            elif choice == "5":
-                print("Thank you for using the ATM!")
-                break
-            else:
-                print("Invalid option, please try again.")
-    else:
-        print("Invalid PIN!")
+## Future Enhancements
+- Implementing file/database storage for persistence.
+- Adding user authentication for security.
+- Enhancing the UI with a graphical interface.
 
-if __name__ == "__main__":
-    main()
+## Contributing
+Contributions are welcome! If you want to improve this project, feel free to fork the repository and submit a pull request.
+
+## License
+This project is open-source and available under the [MIT License](LICENSE).
+
